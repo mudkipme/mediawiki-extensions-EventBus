@@ -211,6 +211,16 @@ class EventBus {
 	 */
 	public static function serializeEvents( $events ) {
 		try {
+			$ksortRecursive = function ( &$array ) use ( &$ksortRecursive ) {
+				if ( ! is_array( $array ) )
+					return false;
+				ksort( $array );
+				foreach ( $array as &$arr ) {
+					$ksortRecursive( $arr );
+				}
+				return true;
+			};
+			$ksortRecursive( $events );
 			$serializedEvents = FormatJson::encode( $events, false, FormatJson::ALL_OK );
 			if ( empty( $serializedEvents ) ) {
 				// Something failed. Let's figure out exactly which one.
