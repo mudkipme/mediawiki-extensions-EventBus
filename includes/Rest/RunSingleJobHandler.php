@@ -126,4 +126,12 @@ class RunSingleJobHandler extends Handler {
 		}
 		return new EventBodyValidator( $this->config->get( 'SecretKey' ), $this->logger );
 	}
+
+	/**
+	 * Indicates whether this route requires write access.
+	 * @return bool
+	 */
+	public function needsWriteAccess() {
+		return false;
+	}
 }
